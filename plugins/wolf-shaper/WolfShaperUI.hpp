@@ -32,6 +32,12 @@ enum Parameters
   paramCount
 };
 
+enum UIParameters
+{
+	uiParamMustHideVertices = 0;
+	uiParamCount
+};
+
 class WolfShaperUI : public UI,
                      public NanoSwitch::Callback,
                      public NanoButton::Callback,
@@ -87,6 +93,7 @@ private:
   ScopedPointer<WidgetBar> fGraphBar;
   ScopedPointer<ResetGraphButton> fButtonResetGraph;
   ScopedPointer<NanoLabel> fLabelButtonResetGraph;
+  ScopedPointer<EyeSwitch> fSwitchMustHideVertices;
 
   DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WolfShaperUI)
 };

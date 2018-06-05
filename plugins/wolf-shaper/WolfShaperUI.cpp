@@ -128,6 +128,10 @@ WolfShaperUI::WolfShaperUI() : UI(665, 665)
     fLabelButtonResetGraph->setFontSize(15.0f);
     fLabelButtonResetGraph->setAlign(ALIGN_LEFT | ALIGN_MIDDLE);
     fLabelButtonResetGraph->setMargin(Margin(6, 0, std::round(fButtonResetGraph->getHeight() / 2.0f) + 1, 0));
+    
+    fSwitchMustHideVertices = new EyeSwitch(this, Size<uint>(32,32));
+    fSwitchMustHideVertices->setId(uiParamHideVertices);
+    fSwitchBipolarMode->setCallback(this);
 
     positionWidgets(width, height);
 }
@@ -195,6 +199,8 @@ void WolfShaperUI::positionWidgets(uint width, uint height)
 
     fButtonResetGraph->setAbsolutePos(20, graphBarMiddleY - fButtonResetGraph->getHeight() / 2.0f);
     fLabelButtonResetGraph->setAbsolutePos(fButtonResetGraph->getAbsoluteX() + fButtonResetGraph->getWidth(), fButtonResetGraph->getAbsoluteY());
+
+    fSwitchMustHideVertices->setAbsolutePos(fGraphBar->getAbsoluteX() + fGraphBar->getWidth() - 20, graphBarMiddleY - fSwitchMustHideVertices->getHeight() / 2.0f);
 
     float centerAlignDifference = (fLabelWheelOversample->getWidth() - fWheelOversample->getWidth()) / 2.0f;
 
@@ -349,6 +355,12 @@ void WolfShaperUI::nanoSwitchClicked(NanoSwitch *nanoSwitch)
 {
     const uint switchId = nanoSwitch->getId();
     const int value = nanoSwitch->isDown() ? 1 : 0;
+
+    if(switchId == uiParamHideVertices)
+    {
+	    fGraphWidget->setMustHideVertices(value);
+	    return;
+    }
 
     setParameterValue(switchId, value);
 
